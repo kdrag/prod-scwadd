@@ -1,0 +1,8 @@
+node_modules/
+ssl/certs/*
+ssl/private/*
+output/*
+.env
+
+!empty
+!*.sample

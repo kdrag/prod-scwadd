@@ -1,0 +1,60 @@
+#!/bin/bash
+
+yum update -y
+
+yum install docker git -y
+
+service docker start
+
+usermod -a -G docker ec2-user
+
+curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+
+chmod +x /usr/local/bin/docker-compose
+
+git clone https://github.com/clmsnskr/pge-scwadd
+
+cd pge-scwadd
+
+git checkout develop
+
+
+# These URL values can be modified for different environments
+
+echo "
+
+SMD_AUTH_BASE_URL=https://sharemydataqa.pge.com/myAuthorization
+
+REDIRECT_BASE_URL=$(/opt/aws/bin/ec2-metadata -p | sed 's/public-hostname: /http:\/\//g')
+
+PGE_API_BASE_URL=https://apiqa.pge.com
+
+
+# CLIENT_ID value from ShareMyData portal
+CLIENT_ID=
+
+# CLIENT_SECRET value from ShareMyData portal
+CLIENT_SECRET=
+
+" >> /pge-scwadd/.env
+
+
+# CERTIFICATE value from SSL
+echo "
+
+" >> /pge-scwadd/ssl/certs/certificate.crt
+
+
+# PRIVATE KEY value from SSL
+echo "
+
+" >> /pge-scwadd/ssl/private/private.key
+
+
+mkdir -p nginx/config/auth
+
+
+echo "" >> pge-scwadd/nginx/config/auth/htpasswd
+
+
+docker-compose up --build -d
