@@ -12,22 +12,22 @@ curl -L https://github.com/docker/compose/releases/latest/download/docker-compos
 
 chmod +x /usr/local/bin/docker-compose
 
-git clone https://github.com/clmsnskr/pge-scwadd
+git clone https://github.com/kdrag/prod-scwadd
 
-cd pge-scwadd
+cd prod-scwadd
 
-git checkout develop
+git checkout master
 
 
 # These URL values can be modified for different environments
 
 echo "
 
-SMD_AUTH_BASE_URL=https://sharemydataqa.pge.com/myAuthorization
+SMD_AUTH_BASE_URL=https://sharemydata.pge.com/myAuthorization
 
 REDIRECT_BASE_URL=$(/opt/aws/bin/ec2-metadata -p | sed 's/public-hostname: /http:\/\//g')
 
-PGE_API_BASE_URL=https://apiqa.pge.com
+PGE_API_BASE_URL=https://api.pge.com
 
 
 # CLIENT_ID value from ShareMyData portal
@@ -36,25 +36,25 @@ CLIENT_ID=
 # CLIENT_SECRET value from ShareMyData portal
 CLIENT_SECRET=
 
-" >> /pge-scwadd/.env
+" >> /prod-scwadd/.env
 
 
 # CERTIFICATE value from SSL
 echo "
 
-" >> /pge-scwadd/ssl/certs/certificate.crt
+" >> /prod-scwadd/ssl/certs/certificate.crt
 
 
 # PRIVATE KEY value from SSL
 echo "
 
-" >> /pge-scwadd/ssl/private/private.key
+" >> /prod-scwadd/ssl/private/private.key
 
 
 mkdir -p nginx/config/auth
 
 
-echo "" >> pge-scwadd/nginx/config/auth/htpasswd
+echo "" >> prod-scwadd/nginx/config/auth/htpasswd
 
 
 docker-compose up --build -d
