@@ -53,7 +53,8 @@ echo "
 
 mkdir -p nginx/config/auth
 
-
+# insert username:{SHA}<encoded value> between the "" below, where username is some string value, and <encoded value> is given by
+# using a tool such as from https://hostingcanada.org/htpasswd-generator/ to help create the encoding.
 echo "" >> prod-scwadd/nginx/config/auth/htpasswd
 
 
