@@ -120,7 +120,7 @@ app.get("/OAuthCallback", async (req, res, next) => {
 
   // read the Customer Name
   const customerNameResponse = await axios.get(
-    `${PGE_API_BASE_URL}/GreenButtonConnect/espi/1_1/resource/RetailCustomer/${subscriptionId}`,
+    `${PGE_API_BASE_URL}/GreenButtonConnect/espi/1_1/resource/Batch/RetailCustomer/${subscriptionId}`,
     { httpsAgent, headers }
   );
  // read Customer Name based on the string matched "name", and pull the value
