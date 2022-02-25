@@ -124,7 +124,8 @@ app.get("/OAuthCallback", async (req, res, next) => {
     { httpsAgent, headers }
   );
   // log the returned value for RetailCustomer API
-  console.info('RetaiCustomer API returned value: ${customerNameResponse}')
+  console.info('RetaiCustomer API returned value: ${customerNameResponse.data}')
+  console.info(customerResponse.data)
  // read Customer Name based on the string matched "name", and pull the value
 // const customerName = customerNameResponse.data.match(
 //  /\/name\/([A-Z]+)/
@@ -250,7 +251,7 @@ app.get("/OAuthCallback", async (req, res, next) => {
   const twoHundredEighteenthDaysAgo = daysAgo(218);
   const twoHundredFortyEigthDaysAgo = daysAgo(248);
   const eigthMonthParams = {
-    "published-max": twoHundredEighteethDaysAgo,
+    "published-max": twoHundredEighteenthDaysAgo,
     "published-min": twoHundredFortyEigthDaysAgo,
   };
 
