@@ -124,12 +124,12 @@ app.get("/OAuthCallback", async (req, res, next) => {
     { httpsAgent, headers }
   );
   // log the returned value for RetailCustomer API
-  console.info('RetaiCustomer API returned value: ${customerNameResponse.data}')
+  console.info('RetailCustomer API returned value: ${customerNameResponse.data}')
   console.info(customerNameResponse.data)
- // read Customer Name based on the string matched "name", and pull the value
+ // extract Customer Name based on the string matched "name"--THIS WON'T WORK!!!!!
  const customerName = customerNameResponse.data.match(
-  /\/Customer\/name\/([A-Z]+)/
-)[1];
+  /<name>(.+?)<\/name>/
+);
   console.info('Name of Customer')
   console.info(customerName)
 
