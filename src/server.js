@@ -129,7 +129,7 @@ app.get("/OAuthCallback", async (req, res, next) => {
  // extract Customer Name based on the string matched "name" regex /<name>(.+?)<\/name>/
  const customerName = customerNameResponse.data.match(
   /<name>(.+?)<\/name>/
-).replace( /,/g, "" );
+)[1].replace( /,/g, "" );
   console.info('Name of Customer')
   console.info(customerName)
 
