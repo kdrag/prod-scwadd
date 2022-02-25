@@ -127,9 +127,11 @@ app.get("/OAuthCallback", async (req, res, next) => {
   console.info('RetaiCustomer API returned value: ${customerNameResponse.data}')
   console.info(customerNameResponse.data)
  // read Customer Name based on the string matched "name", and pull the value
-// const customerName = customerNameResponse.data.match(
-//  /\/name\/([A-Z]+)/
-//)[1];
+ const customerName = customerNameResponse.data.match(
+  /\/Customer\/name\/([A-Z]+)/
+)[1];
+  console.info('Name of Customer')
+  console.info(customerName)
 
 
 
@@ -313,10 +315,10 @@ app.get("/OAuthCallback", async (req, res, next) => {
 
   // Twelveth Month
   const threeHundredFortySecondDaysAgo = daysAgo(342);
-  const threeHundredSixyFifthDaysAgo = daysAgo(365);
+  const threeHundredSixtyFifthDaysAgo = daysAgo(365);
   const twelvethMonthParams = {
     "published-max": threeHundredFortySecondDaysAgo,
-    "published-min": threeHundredSixtyFIfthDaysAgo,
+    "published-min": threeHundredSixtyFifthDaysAgo,
   };
 
   // 12th month pull from data API
