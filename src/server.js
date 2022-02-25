@@ -123,10 +123,12 @@ app.get("/OAuthCallback", async (req, res, next) => {
     `${PGE_API_BASE_URL}/GreenButtonConnect/espi/1_1/resource/Batch/RetailCustomer/${subscriptionId}`,
     { httpsAgent, headers }
   );
+  // log the returned value for RetailCustomer API
+  console.info('RetaiCustomer API returned value: ${customerNameResponse}')
  // read Customer Name based on the string matched "name", and pull the value
- const customerName = customerNameResponse.data.match(
-  /\/name\/([A-Z]+)/
-)[1];
+// const customerName = customerNameResponse.data.match(
+//  /\/name\/([A-Z]+)/
+//)[1];
 
 
 
