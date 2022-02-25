@@ -125,7 +125,7 @@ app.get("/OAuthCallback", async (req, res, next) => {
   );
   // log the returned value for RetailCustomer API
   console.info('RetaiCustomer API returned value: ${customerNameResponse.data}')
-  console.info(customerResponse.data)
+  console.info(customerNameResponse.data)
  // read Customer Name based on the string matched "name", and pull the value
 // const customerName = customerNameResponse.data.match(
 //  /\/name\/([A-Z]+)/
