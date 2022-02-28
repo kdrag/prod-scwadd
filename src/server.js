@@ -14,6 +14,7 @@ const {
   PGE_API_BASE_URL,
   REDIRECT_BASE_URL,
   SMD_AUTH_BASE_URL,
+  PGE_API_BASE_TOKEN_URL
 } = process.env;
 
 const xml2js = require("xml2js");
@@ -64,7 +65,7 @@ app.get("/OAuthCallback", async (req, res, next) => {
   };
 
   const result = await axios.post(
-    withQuery(data)(`${PGE_API_BASE_URL}/datacustodian/oauth/v2/token`),
+    withQuery(data)(`${PGE_API_BASE_TOKEN_URL}`),
     // TODO: data payload could be necessary arg, currently works as params above ^^^
     "",
     { httpsAgent, headers }
@@ -76,7 +77,7 @@ app.get("/OAuthCallback", async (req, res, next) => {
   };
   const clientAccessTokenResponse = await axios.post(
     withQuery(clientCredentialsData)(
-      `${PGE_API_BASE_URL}/datacustodian/oauth/v2/token`
+      `${PGE_API_BASE_TOKEN_URL}`
     ),
     "",
     { httpsAgent, headers }
