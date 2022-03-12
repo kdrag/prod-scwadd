@@ -29,6 +29,10 @@ REDIRECT_BASE_URL=$(/opt/aws/bin/ec2-metadata -p | sed 's/public-hostname: /http
 
 PGE_API_BASE_URL=https://api.pge.com
 
+PGE_API_BASE_AUTHORIZE_URL=https://api.pge.com/datacustodian/oauth/v2/authorize
+
+PGE_API_BASE_TOKEN_URL=https://api.pge.com/datacustodian/oauth/v2/token
+
 
 # CLIENT_ID value from ShareMyData portal
 CLIENT_ID=
