@@ -86,7 +86,7 @@ try {
       // get bearer tokens (access token) from token endpoint
       "",
       { httpsAgent, headers }
-    )};
+    );
 
     console.log("Result Access Token: " + result.data.access_token);
 
