@@ -57,7 +57,9 @@ app.get("/", (req, res) => {
 // Overall Try-Catch for application
 try {
 
+  
   // Request Tokens from token API endpoint upon a browser 302 to registered callback URL
+
   app.get("/OAuthCallback", async (req, res, next) => {
     console.log("302 redirect upon authorization by customer")
     const headers = {
@@ -95,25 +97,13 @@ try {
       grant_type: "client_credentials",
     };
 
-    try {
-      const clientAccessTokenResponse = await axios.post(
-        withQuery(clientCredentialsData)(
-          `${PGE_API_BASE_TOKEN_URL}`
-        ),
-        "",
-        { httpsAgent, headers }
-        ).catch(function(error){
-        if (error.response){
-        
-        } else if (error.request){
-
-        } else {
-          console.log("Error-other when retrieving client access token", error.message);
-        }
-      })
-      } catch (error){
-        console.log("Caught erorr at attempting to read query.data for client access token")
-    };
+    const clientAccessTokenResponse = await axios.post(
+      withQuery(clientCredentialsData)(
+        `${PGE_API_BASE_TOKEN_URL}`
+      ),
+      "",
+      { httpsAgent, headers }
+     );
 
     req.data = {
       ...result.data,
