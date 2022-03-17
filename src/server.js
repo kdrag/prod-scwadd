@@ -59,7 +59,7 @@ try {
 
   // Request Tokens from token API endpoint upon a browser 302 to registered callback URL
   app.get("/OAuthCallback", async (req, res, next) => {
-    
+    console.log("302 redirect upon authorization by customer")
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Basic ${encode64(`${CLIENT_ID}:${CLIENT_SECRET}`)}`,
@@ -81,28 +81,35 @@ try {
         redirect_uri: `${REDIRECT_BASE_URL}/OAuthCallback`,
       };
       //request for access token using Authcode
+      console.log("Authcode is: " + data.code)
     } catch (error){
       console.log("Authcode value is undefined");
     };
 
-    const result = await axios.post(
-      withQuery(data)(`${PGE_API_BASE_TOKEN_URL}`),
-      // get bearer tokens (access token) from token endpoint
-      "",
-      { httpsAgent, headers },
-      { timeout: 60}
-    ).catch(function(error){
-      if (error.response){
-          console.log("Unsuccessful at token endpoint-response not successful")
-          console.log(error.response)
-      } else if (error.request){
-        console.log("Request rejected at token endpoint");
-        console.log(error.request);
-      } else {
-        console.log('Error - Other', error.message);
-      }
-      console.log(error.config);
-    });
+    try{
+      const result = await axios.post(
+        withQuery(data)(`${PGE_API_BASE_TOKEN_URL}`),
+        // get bearer tokens (access token) from token endpoint
+        "",
+        { httpsAgent, headers },
+        { timeout: 60}
+      ).catch(function(error){
+        if (error.response){
+            console.log("Unsuccessful at token endpoint-response not successful")
+           console.log(error.response)
+        } else if (error.request){
+          console.log("Request rejected at token endpoint");
+          console.log(error.request);
+        } else {
+          console.log('Error - Other: ' + error.message);
+          console.log('Data: ' + data.code)
+        }
+        console.log(error.config);
+      });
+    } catch (error){
+      console.log("Caught erorr at attempting to read query.data")
+    };
+
 
     //request for client_access_token to be used in destroying session
     const clientCredentialsData = {
