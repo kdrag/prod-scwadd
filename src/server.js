@@ -91,8 +91,7 @@ try {
         withQuery(data)(`${PGE_API_BASE_TOKEN_URL}`),
         // get bearer tokens (access token) from token endpoint
         "",
-        { httpsAgent, headers },
-        { timeout: 60}
+        { httpsAgent, headers }
       ).catch(function(error){
         if (error.response){
             console.log("Unsuccessful at token endpoint-response not successful")
@@ -121,8 +120,7 @@ try {
         `${PGE_API_BASE_TOKEN_URL}`
       ),
       "",
-      { httpsAgent, headers },
-      { timeout: 60}
+      { httpsAgent, headers }
     ).catch(function(error){
       if (error.response){
         
@@ -162,8 +160,7 @@ try {
     // read the UsagePointID (equivalent to SA_UUID) set
     const usagePointIdResponse = await axios.get(
       `${PGE_API_BASE_URL}/GreenButtonConnect/espi/1_1/resource/Subscription/${subscriptionId}/UsagePoint`,
-      { httpsAgent, headers },
-      { timeout: 60}
+      { httpsAgent, headers }
     );
     // read one UsagePointID based on the string matched "UsagePoint", a ten digit value, and pull first value
     const usagePointId = usagePointIdResponse.data.match(
@@ -173,8 +170,7 @@ try {
     // read the Customer Name
     const customerNameResponse = await axios.get(
       `${PGE_API_BASE_URL}/GreenButtonConnect/espi/1_1/resource/Batch/RetailCustomer/${subscriptionId}`,
-      { httpsAgent, headers },
-      { timeout: 60}
+      { httpsAgent, headers }
     );
     // log the returned value for RetailCustomer API
     console.info('RetailCustomer API returned value: ${customerNameResponse.data}')
@@ -203,8 +199,7 @@ try {
       withQuery(firstMonthParams)(
         `${PGE_API_BASE_URL}/GreenButtonConnect/espi/1_1/resource/Batch/Subscription/${subscriptionId}/UsagePoint/${usagePointId}`
       ),
-      { httpsAgent, headers },
-      { timeout: 60}
+      { httpsAgent, headers }
     );
 
     // Second Month
@@ -220,8 +215,7 @@ try {
       withQuery(secondMonthParams)(
         `${PGE_API_BASE_URL}/GreenButtonConnect/espi/1_1/resource/Batch/Subscription/${subscriptionId}/UsagePoint/${usagePointId}`
       ),
-      { httpsAgent, headers },
-      { timeout: 60}
+      { httpsAgent, headers }
     );
 
     // Third Month
@@ -237,8 +231,7 @@ try {
       withQuery(thirdMonthParams)(
         `${PGE_API_BASE_URL}/GreenButtonConnect/espi/1_1/resource/Batch/Subscription/${subscriptionId}/UsagePoint/${usagePointId}`
       ),
-      { httpsAgent, headers },
-      { timeout: 60}
+      { httpsAgent, headers }
     );
 
     // Fourth Month
@@ -254,8 +247,7 @@ try {
       withQuery(fourthMonthParams)(
         `${PGE_API_BASE_URL}/GreenButtonConnect/espi/1_1/resource/Batch/Subscription/${subscriptionId}/UsagePoint/${usagePointId}`
       ),
-      { httpsAgent, headers },
-      { timeout: 60}
+      { httpsAgent, headers }
     );
 
     // Fifth Month
@@ -271,8 +263,7 @@ try {
       withQuery(fifthMonthParams)(
         `${PGE_API_BASE_URL}/GreenButtonConnect/espi/1_1/resource/Batch/Subscription/${subscriptionId}/UsagePoint/${usagePointId}`
       ),
-      { httpsAgent, headers },
-      { timeout: 60}
+      { httpsAgent, headers }
     );
 
     // Sixth Month
@@ -288,8 +279,7 @@ try {
       withQuery(sixthMonthParams)(
         `${PGE_API_BASE_URL}/GreenButtonConnect/espi/1_1/resource/Batch/Subscription/${subscriptionId}/UsagePoint/${usagePointId}`
       ),
-      { httpsAgent, headers },
-      { timeout: 60}
+      { httpsAgent, headers }
     );
 
     // Seventh Month
@@ -305,8 +295,7 @@ try {
       withQuery(seventhMonthParams)(
         `${PGE_API_BASE_URL}/GreenButtonConnect/espi/1_1/resource/Batch/Subscription/${subscriptionId}/UsagePoint/${usagePointId}`
       ),
-      { httpsAgent, headers },
-      { timeout: 60}
+      { httpsAgent, headers }
     );
 
     // Eigth Month
@@ -322,8 +311,7 @@ try {
       withQuery(eigthMonthParams)(
         `${PGE_API_BASE_URL}/GreenButtonConnect/espi/1_1/resource/Batch/Subscription/${subscriptionId}/UsagePoint/${usagePointId}`
       ),
-     { httpsAgent, headers },
-     { timeout: 60}
+     { httpsAgent, headers }
     );
 
     // Ninth Month
@@ -339,8 +327,7 @@ try {
      withQuery(ninthMonthParams)(
        `${PGE_API_BASE_URL}/GreenButtonConnect/espi/1_1/resource/Batch/Subscription/${subscriptionId}/UsagePoint/${usagePointId}`
      ),
-     { httpsAgent, headers },
-     { timeout: 60}
+     { httpsAgent, headers }
    );
 
     // Tenth Month
@@ -356,8 +343,7 @@ try {
      withQuery(tenthMonthParams)(
        `${PGE_API_BASE_URL}/GreenButtonConnect/espi/1_1/resource/Batch/Subscription/${subscriptionId}/UsagePoint/${usagePointId}`
      ),
-     { httpsAgent, headers },
-     { timeout: 60}
+     { httpsAgent, headers }
    );
 
     // Eleventh Month
@@ -389,8 +375,7 @@ try {
       withQuery(twelvethMonthParams)(
         `${PGE_API_BASE_URL}/GreenButtonConnect/espi/1_1/resource/Batch/Subscription/${subscriptionId}/UsagePoint/${usagePointId}`
       ),
-      { httpsAgent, headers },
-      { timeout: 60}
+      { httpsAgent, headers }
     );
 
     // send request to PG&E's SMD data access API
