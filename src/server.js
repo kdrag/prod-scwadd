@@ -65,26 +65,20 @@ try {
       Authorization: `Basic ${encode64(`${CLIENT_ID}:${CLIENT_SECRET}`)}`,
     };
 
-    try{
-      const httpsAgent = new https.Agent({
-        cert: fs.readFileSync("ssl/certs/certificate.crt"),
-         key: fs.readFileSync("ssl/private/private.key"),
-       });
-    } catch(error){
-      console.log("read of cert and key files unsuccessful")
+
+    const httpsAgent = new https.Agent({
+      cert: fs.readFileSync("ssl/certs/certificate.crt"),
+      key: fs.readFileSync("ssl/private/private.key"),
+    });   
+
+    const data = {
+      grant_type: "authorization_code",
+      code: req.query.code,
+      redirect_uri: `${REDIRECT_BASE_URL}/OAuthCallback`,
     };
-    
-    try{
-      const data = {
-        grant_type: "authorization_code",
-        code: req.query.code,
-        redirect_uri: `${REDIRECT_BASE_URL}/OAuthCallback`,
-      };
-      //request for access token using Authcode
-      console.log("Authcode is: " + data.code)
-    } catch (error){
-      console.log("Authcode value is undefined");
-    };
+    //request for access token using Authcode
+    console.log("Authcode is: " + data.code)
+
 
     try{
       const result = await axios.post(
@@ -106,7 +100,7 @@ try {
         console.log(error.config);
       });
     } catch (error){
-      console.log("Caught erorr at attempting to read query.data")
+      console.log("Caught erorr at attempting to read query.data for access token")
     };
 
 
@@ -115,21 +109,25 @@ try {
       grant_type: "client_credentials",
     };
 
-    const clientAccessTokenResponse = await axios.post(
-      withQuery(clientCredentialsData)(
-        `${PGE_API_BASE_TOKEN_URL}`
-      ),
-      "",
-      { httpsAgent, headers }
-    ).catch(function(error){
-      if (error.response){
+    try {
+      const clientAccessTokenResponse = await axios.post(
+        withQuery(clientCredentialsData)(
+          `${PGE_API_BASE_TOKEN_URL}`
+        ),
+        "",
+        { httpsAgent, headers }
+        ).catch(function(error){
+        if (error.response){
         
-      } else if (error.request){
+        } else if (error.request){
 
-      } else {
-        console.log("Error-other when retrieving client access token", error.message);
-      }
-    });
+        } else {
+          console.log("Error-other when retrieving client access token", error.message);
+        }
+      })
+      } catch (error){
+        console.log("Caught erorr at attempting to read query.data for client access token")
+    };
 
     req.data = {
       ...result.data,
