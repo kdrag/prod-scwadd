@@ -80,29 +80,15 @@ try {
     console.log("Authcode is: " + data.code)
 
 
-    try{
-      const result = await axios.post(
-        withQuery(data)(`${PGE_API_BASE_TOKEN_URL}`),
-        // get bearer tokens (access token) from token endpoint
-        "",
-        { httpsAgent, headers }
-      ).catch(function(error){
-        if (error.response){
-            console.log("Unsuccessful at token endpoint-response not successful")
-           console.log(error.response)
-        } else if (error.request){
-          console.log("Request rejected at token endpoint");
-          console.log(error.request);
-        } else {
-          console.log('Error - Other: ' + error.message);
-          console.log('Data: ' + data.code)
-        }
-        console.log(error.config);
-      });
-    } catch (error){
-      console.log("Caught erorr at attempting to read query.data for access token")
-    };
+    
+    const result = await axios.post(
+      withQuery(data)(`${PGE_API_BASE_TOKEN_URL}`),
+      // get bearer tokens (access token) from token endpoint
+      "",
+      { httpsAgent, headers }
+    )};
 
+    console.log("Result Access Token: " + result.data.access_token);
 
     //request for client_access_token to be used in destroying session
     const clientCredentialsData = {
