@@ -1,5 +1,4 @@
 require("dotenv").config();
-var xmlserializer = require('xmlserializer')
 const { default: axios } = require("axios");
 const https = require("https");
 const fs = require("fs");
@@ -371,7 +370,7 @@ try {
       const csvContent = [
        "SA_UUID, Interval Timestamp, Delivered From Grid Value (Wh), Back To Grid Value (Wh)",
       ];
-      console.log('xml file values: ' + xmlserializer.serializeToString(values));
+      console.log('xml file values: ' ,values);
       values.map((value, index) => {
        // convert XML to JSON
        xml2js.parseString(value.data, (err, result) => {
