@@ -375,6 +375,7 @@ try {
        // convert XML to JSON
        xml2js.parseString(value.data, (err, result) => {
           if (err) {
+            console.log("Error on this XML: ", value);
             throw err;
          }
 
