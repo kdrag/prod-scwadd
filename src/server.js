@@ -370,7 +370,7 @@ try {
       const csvContent = [
        "SA_UUID, Interval Timestamp, Delivered From Grid Value (Wh), Back To Grid Value (Wh)",
       ];
-      console.log('xml file values: ' ,values);
+      //console.log('xml file values: ' ,values);
       values.map((value, index) => {
        // convert XML to JSON
        xml2js.parseString(value.data, (err, result) => {
@@ -455,6 +455,7 @@ try {
           }
        });
       });
+      //console.log('xml file value: ', index, value);
       next();
     });
   });
