@@ -455,7 +455,7 @@ try {
           }
        });
       });
-      //console.log('xml file value: ', index, value);
+      console.log('xml file value: ', index, value);
       next();
     });
   });
