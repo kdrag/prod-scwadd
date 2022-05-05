@@ -372,91 +372,94 @@ try {
       ];
       //console.log('xml file values: ' ,values);
       values.map((value, index) => {
-       // convert XML to JSON
-       xml2js.parseString(value.data, (err, result) => {
-          if (err) {
-            console.log("Error on this XML: ", value);
-            throw err;
-         }
-
-          const response = result["ns1:feed"]["ns1:entry"].reduce(
-            (acc, item, index) => {
-              if (
-                item["ns1:content"] &&
-                item["ns1:content"][0]["ns0:IntervalBlock"]
-              ) {
-                // retrieves energyFlowIndicator to determine if interval value is DeliveredFromGrid OR BackToGrid
-                const energyFlowUrl = item["ns1:link"][0]["$"].href;
-                const energyFlowIndicatorString = energyFlowUrl.split("/")[12];
-                const firstBufferString = decode64(energyFlowIndicatorString);
-                const secondBufferString = decode64(firstBufferString);
-                const energyFlowIndicator = R.compose(
-                  (arr) => arr[arr.length - 1]
-                )(secondBufferString.split(":"));
-
-               const intervalReading = item["ns1:content"][0][
-                  "ns0:IntervalBlock"
-                ][0]["ns0:IntervalReading"].reduce((accIR, itemIR) => {
-                  const itemStartTime =
-                    itemIR["ns0:timePeriod"][0]["ns0:start"][0];
-                  const itemValue = itemIR["ns0:value"][0];
-
-                  const itemByStartTime = {
-                    start: itemStartTime,
-                    ...(energyFlowIndicator === "19"
-                      ? { generated: itemValue }
-                      : { delivered: itemValue }),
-                  };
-
-                  return [...accIR, itemByStartTime];
-                }, []);
-                return [...acc, ...intervalReading];
-              } else {
-                throw 'invalid item';
-                console.log('xml file index, value: ', index, value);
-              }
-             return acc;
-            },
-            []
-          );
-
-          const groupedByStart = R.groupBy(({ start }) => start)(response);
-          const csvLines = Object.keys(groupedByStart).map((startTime) => {
-            const entry = groupedByStart[startTime];
-            const newDate = new Date(+startTime * 1000);
-
-           const entryObj = {
-              ...entry[0],
-              ...entry[1],
-            };
-
-            return `${subscriptionId}, ${newDate}, ${
-              +entryObj.delivered * 10 ** -3
-            }, ${+entryObj.generated * 10 ** -3}`;
-          });
-
-          const outputDate = new Date()
-            .toISOString()
-            .replace(/T/, " ")
-            .replace(/\..+/, "");
-
-          if (index === 0) {
-            csvContent.push(...csvLines);
-            if (!fs.existsSync("output")) fs.mkdirSync("output");
-            // name the file to write with customerName and subscriptionID value
-            fs.writeFileSync(
-              `output/${customerName}-${subscriptionId}-${outputDate}.csv`,
-              csvContent.join("\n")
-            );  
-          } else {
-            //creates new line before appending values
-            fs.appendFileSync(`output/${customerName}-${subscriptionId}-${outputDate}.csv`, "\n");
-            fs.appendFileSync(
-              `output/${customerName}-${subscriptionId}-${outputDate}.csv`,
-              csvLines.join("\n")
+        try {
+          xml2js.parseString(value.data, (err, result) => {
+            if (err) {
+              console.log("Error on this XML: ", value);
+              throw err;
+           }
+            const response = result["ns1:feed"]["ns1:entry"].reduce(
+              (acc, item, index) => {
+                if (
+                  item["ns1:content"] &&
+                  item["ns1:content"][0]["ns0:IntervalBlock"]
+                ) {
+                  // retrieves energyFlowIndicator to determine if interval value is DeliveredFromGrid OR BackToGrid
+                  const energyFlowUrl = item["ns1:link"][0]["$"].href;
+                  const energyFlowIndicatorString = energyFlowUrl.split("/")[12];
+                  const firstBufferString = decode64(energyFlowIndicatorString);
+                  const secondBufferString = decode64(firstBufferString);
+                  const energyFlowIndicator = R.compose(
+                    (arr) => arr[arr.length - 1]
+                  )(secondBufferString.split(":"));
+  
+                 const intervalReading = item["ns1:content"][0][
+                    "ns0:IntervalBlock"
+                  ][0]["ns0:IntervalReading"].reduce((accIR, itemIR) => {
+                    const itemStartTime =
+                      itemIR["ns0:timePeriod"][0]["ns0:start"][0];
+                    const itemValue = itemIR["ns0:value"][0];
+  
+                    const itemByStartTime = {
+                      start: itemStartTime,
+                      ...(energyFlowIndicator === "19"
+                        ? { generated: itemValue }
+                        : { delivered: itemValue }),
+                    };
+  
+                    return [...accIR, itemByStartTime];
+                  }, []);
+                  return [...acc, ...intervalReading];
+                } else {
+                  throw 'invalid item';
+                  console.log('xml file index, value: ', index, value);
+                }
+               return acc;
+              },
+              []
             );
-          }
-       });
+  
+            const groupedByStart = R.groupBy(({ start }) => start)(response);
+            const csvLines = Object.keys(groupedByStart).map((startTime) => {
+              const entry = groupedByStart[startTime];
+              const newDate = new Date(+startTime * 1000);
+  
+             const entryObj = {
+                ...entry[0],
+                ...entry[1],
+              };
+  
+              return `${subscriptionId}, ${newDate}, ${
+                +entryObj.delivered * 10 ** -3
+              }, ${+entryObj.generated * 10 ** -3}`;
+            });
+  
+            const outputDate = new Date()
+              .toISOString()
+              .replace(/T/, " ")
+              .replace(/\..+/, "");
+  
+            if (index === 0) {
+              csvContent.push(...csvLines);
+              if (!fs.existsSync("output")) fs.mkdirSync("output");
+              // name the file to write with customerName and subscriptionID value
+              fs.writeFileSync(
+                `output/${customerName}-${subscriptionId}-${outputDate}.csv`,
+                csvContent.join("\n")
+              );  
+            } else {
+              //creates new line before appending values
+              fs.appendFileSync(`output/${customerName}-${subscriptionId}-${outputDate}.csv`, "\n");
+              fs.appendFileSync(
+                `output/${customerName}-${subscriptionId}-${outputDate}.csv`,
+                csvLines.join("\n")
+              );
+            }
+         });
+        } catch (error) {
+          console.log('xml file index, value: ', index, value);
+        }
+       // convert XML to JSON
       });
       //console.log('xml file value: ', index, value);
       next();
