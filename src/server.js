@@ -412,7 +412,7 @@ try {
                   return [...acc, ...intervalReading];
                 } else {
                   throw 'invalid item';
-                  console.log('xml file index, value: ', index, value);
+                  console.log('Error - invalid content - xml file index, value: ', index, value);
                 }
                return acc;
               },
@@ -457,7 +457,7 @@ try {
             }
          });
         } catch (error) {
-          console.log('xml file index, value: ', index, value);
+          console.log('On Error of item - xml file index, value: ', index, value);
         }
        // convert XML to JSON
       });
