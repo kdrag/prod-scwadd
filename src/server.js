@@ -373,7 +373,6 @@ try {
       //console.log('xml file values: ' ,values);
       values.map((value, index) => {
        // convert XML to JSON
-       console.log('xml file index, value: ', index, value);
        xml2js.parseString(value.data, (err, result) => {
           if (err) {
             console.log("Error on this XML: ", value);
@@ -412,6 +411,9 @@ try {
                   return [...accIR, itemByStartTime];
                 }, []);
                 return [...acc, ...intervalReading];
+              } else {
+                throw 'invalid item';
+                console.log('xml file index, value: ', index, value);
               }
              return acc;
             },
