@@ -376,7 +376,8 @@ try {
           xml2js.parseString(value.data, (error, result) => {
             if (error) {
               console.log("Error on this XML: ", value);
-              throw error;
+              //throw error;
+              reject(error);
            }
             const response = result["ns1:feed"]["ns1:entry"].reduce(
               (acc, item, index) => {
