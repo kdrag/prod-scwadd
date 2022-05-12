@@ -373,7 +373,7 @@ try {
       //console.log('xml file values: ' ,values);
       values.map((value, index) => {
         try {
-          xml2js.parseString(value.data, (err, result) => {
+          xml2js.parseString(value.data, (error, result) => {
             if (err) {
               console.log("Error on this XML: ", value);
               throw err;
