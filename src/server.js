@@ -412,8 +412,13 @@ try {
                   }, []);
                   return [...acc, ...intervalReading];
                 } else {
-                  throw 'invalid item';
-                  console.log('Error - invalid content - xml file index, value: ', index, value, error);
+                  if (error){
+                    console.log('Error - invalid content - xml file index, value: ', index, value, error);
+                  }
+                  //throw 'invalid item';
+                  reject (error);
+                  console.log('error is', error);
+                  //console.log('Error - invalid content - xml file index, value: ', index, value, error);
                 }
                return acc;
               },
