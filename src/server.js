@@ -354,7 +354,7 @@ try {
 
     // send request to PG&E's SMD data access API
     Promise.all([
-      twelvethMonthEnergyResponse,
+    /*  twelvethMonthEnergyResponse,
      eleventhMonthEnergyResponse,
       tenthMonthEnergyResponse,
       ninthMonthEnergyResponse,
@@ -364,8 +364,8 @@ try {
       fifthMonthEnergyResponse,
       fourthMonthEnergyResponse,
       thirdMonthEnergyResponse,
-      secondMonthEnergyResponse,
-      firstMonthEnergyUsageResponse,
+      secondMonthEnergyResponse, */
+      firstMonthEnergyUsageResponse//,
     ]).then((values) => {
       const csvContent = [
        "SA_UUID, Interval Timestamp, Delivered From Grid Value (Wh), Back To Grid Value (Wh)",
