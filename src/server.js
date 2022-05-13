@@ -375,10 +375,10 @@ try {
         try {
           xml2js.parseString(value.data, (error, result) => {
             if (error) {
-              console.log("Error on this XML: ", value);
-              //throw error;
-              reject(error);
+              console.log("Error on this XML: ", error);
+              throw error;
            }
+            console.log('value for the response: ', value.data);
             const response = result["ns1:feed"]["ns1:entry"].reduce(
               (acc, item, index) => {
                 if (
@@ -416,8 +416,8 @@ try {
                     console.log('Error - invalid content - xml file index, value: ', index, value, error);
                   }
                   //throw 'invalid item';
-                  reject (error);
-                  console.log('error is', error);
+                  console.log('index, value here: ', index, value.data);
+                  console.log('log error: ', error);
                   //console.log('Error - invalid content - xml file index, value: ', index, value, error);
                 }
                return acc;
